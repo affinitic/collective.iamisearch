@@ -6,6 +6,9 @@ from plone import api
 from zope.i18n.interfaces import ITranslationDomain
 from zope.interface import implementer
 from zope.schema.interfaces import IVocabularyFactory
+from collective.iamisearch import _
+from Products.CMFPlone.interfaces import ILanguage
+from zope.i18n import translate
 
 
 @implementer(INonInstallable)
@@ -20,7 +23,8 @@ class HiddenProfiles(object):
 
 def post_install(context):
     """Post install script"""
-    # Do something at the end of the installation of this package.
+    # creation of taxonomies
+    taxonomies_collection = ['Iam', 'Isearch']
     data_iam = {
         'taxonomy': 'iam',
         'field_title': 'Iam',
@@ -36,14 +40,22 @@ def post_install(context):
     }
     create_taxonomy_object(data_iam)
     create_taxonomy_object(data_isearch)
-
-    sm = api.portal.get().getSiteManager()
+    #  remove taxonomy test
+    portal = api.portal.get()
+    sm = portal.getSiteManager()
     item = 'collective.taxonomy.test'
     utility = sm.queryUtility(ITaxonomy, name=item)
     utility.unregisterBehavior()
     sm.unregisterUtility(utility, ITaxonomy, name=item)
     sm.unregisterUtility(utility, IVocabularyFactory, name=item)
     sm.unregisterUtility(utility, ITranslationDomain, name=item)
+
+    # creation of two collections by language
+    language_tool = api.portal.get_tool('portal_languages')
+    langs = language_tool.supported_langs
+    for taxonomy_collection in taxonomies_collection:
+        title = "{0}_collection".format(taxonomy_collection)
+        create_folderish('Collection', title, api.portal.get(), langs)
 
 
 def create_taxonomy_object(data):
@@ -57,6 +69,21 @@ def create_taxonomy_object(data):
 
     del data['taxonomy']
     taxonomy.registerBehavior(**data)
+
+
+def create_folderish(type_content, title, parent, langs):
+    new_obj = api.content.create(
+        type=type_content,
+        title=title,
+        container=parent)
+    language = ILanguage(new_obj).get_language()
+    for lang in langs:
+        if language == lang:
+            continue
+        else:
+            new_obj.title = translate(_(title), target_language=lang)
+
+    new_obj.reindexObject()
 
 
 def uninstall(context):
