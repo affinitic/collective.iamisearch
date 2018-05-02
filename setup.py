@@ -54,6 +54,7 @@ setup(
             'plone.app.contenttypes',
             'plone.app.robotframework[debug]',
             'collective.taxonomy',
+            'eea.facetednavigation',
         ],
     },
     entry_points="""
