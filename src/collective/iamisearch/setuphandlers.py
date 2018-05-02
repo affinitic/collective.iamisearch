@@ -9,6 +9,7 @@ from zope.schema.interfaces import IVocabularyFactory
 from collective.iamisearch import _
 from Products.CMFPlone.interfaces import ILanguage
 from zope.i18n import translate
+from plone.app.multilingual import api as api_lng
 
 
 @implementer(INonInstallable)
@@ -54,8 +55,8 @@ def post_install(context):
     language_tool = api.portal.get_tool('portal_languages')
     langs = language_tool.supported_langs
     for taxonomy_collection in taxonomies_collection:
-        title = "{0}_collection".format(taxonomy_collection)
-        create_folderish('Collection', title, api.portal.get(), langs)
+        title = "{0}_folder".format(taxonomy_collection)
+        create_folderish('Folder', title, api.portal.get()[langs[0]], langs)
 
 
 def create_taxonomy_object(data):
@@ -81,9 +82,9 @@ def create_folderish(type_content, title, parent, langs):
         if language == lang:
             continue
         else:
-            new_obj.title = translate(_(title), target_language=lang)
-
-    new_obj.reindexObject()
+            translated_obj = api_lng.translate(new_obj, lang)
+            translated_obj.title = translate(_(title), target_language=lang)
+            translated_obj.reindexObject()
 
 
 def uninstall(context):
