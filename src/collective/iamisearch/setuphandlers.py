@@ -10,6 +10,7 @@ from collective.iamisearch import _
 from Products.CMFPlone.interfaces import ILanguage
 from zope.i18n import translate
 from plone.app.multilingual import api as api_lng
+import os
 
 
 @implementer(INonInstallable)
@@ -80,11 +81,23 @@ def create_folderish(type_content, title, parent, langs):
     language = ILanguage(new_obj).get_language()
     for lang in langs:
         if language == lang:
+            _activate_dashboard_navigation(new_obj, '/faceted/config/iam_folder.xml')
             continue
         else:
             translated_obj = api_lng.translate(new_obj, lang)
             translated_obj.title = translate(_(title), target_language=lang)
             translated_obj.reindexObject()
+            _activate_dashboard_navigation(translated_obj, '/faceted/config/iam_folder.xml')
+
+
+def _activate_dashboard_navigation(context, config_path=''):
+    subtyper = context.restrictedTraverse('@@faceted_subtyper')
+    if subtyper.is_faceted:
+        return
+    subtyper.enable()
+    context.unrestrictedTraverse('@@faceted_exportimport').import_xml(
+        import_file=open(os.path.dirname(__file__) + config_path)
+    )
 
 
 def uninstall(context):
