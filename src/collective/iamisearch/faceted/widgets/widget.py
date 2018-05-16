@@ -9,7 +9,7 @@ class Widgettaxonomy(Widget):
     """ Widget
     """
     widget_type = 'select'
-    widget_label = _('Select seb')
+    widget_label = _('taxonomy_widget')
     index = ViewPageTemplateFile('widget.pt')
 
     def taxonomy(self):
