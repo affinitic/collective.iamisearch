@@ -47,10 +47,11 @@ def post_install(context):
     sm = portal.getSiteManager()
     item = 'collective.taxonomy.test'
     utility = sm.queryUtility(ITaxonomy, name=item)
-    utility.unregisterBehavior()
-    sm.unregisterUtility(utility, ITaxonomy, name=item)
-    sm.unregisterUtility(utility, IVocabularyFactory, name=item)
-    sm.unregisterUtility(utility, ITranslationDomain, name=item)
+    if utility:
+        utility.unregisterBehavior()
+        sm.unregisterUtility(utility, ITaxonomy, name=item)
+        sm.unregisterUtility(utility, IVocabularyFactory, name=item)
+        sm.unregisterUtility(utility, ITranslationDomain, name=item)
 
     # creation of two collections by language
     language_tool = api.portal.get_tool('portal_languages')
