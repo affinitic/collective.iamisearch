@@ -1,19 +1,24 @@
+<tal:block tal:define="iamlinks python: view.generate_menu_value_by_taxonomy_level('iam');
+                       isearchlinks python: view.generate_menu_value_by_taxonomy_level('isearch')">
+  <dl class="actionMenu" id="iamMenu" tal:condition="iamlinks">
+    <dt class="actionMenuHeader">
+      <a href="some_destination">I am</a>
+    </dt>
+    <dd class="actionMenuContent" tal:repeat="linkname iamlinks">
+      <a href="#" tal:content="linkname"></a>
+    </dd>
+  </dl>
 
- <dl class="actionMenu" id="uniqueIdForThisMenu">
+  <dl class="actionMenu" id="IsearchMenu" tal:condition="isearchlinks">
+      <dt class="actionMenuHeader">
+        <a href="some_destination">I search</a>
+      </dt>
 
-
-    <div tal:define="foo view/iamlink">
-
-    </div>
-     <dt class="actionMenuHeader">
-       <!-- The following a-tag needs to be clicked to dropdown the menu -->
-       <a href="some_destination">A Title</a>
-     </dt>
-     <dd class="actionMenuContent">
-       <a href="some_destination">A Title 22</a>
-       <!-- Here can be any content you want -->
-     </dd>
-   </dl>
+      <dd class="actionMenuContent" tal:repeat="linkname isearchlinks">
+        <a href="#" tal:content="linkname"></a>
+      </dd>
+  </dl>
+</tal:block>
 
 <style>
  .actionMenu.activated {
@@ -23,5 +28,8 @@
  .actionMenu.deactivated {
    display: none;
  }
+
+
+
 </style>
 
