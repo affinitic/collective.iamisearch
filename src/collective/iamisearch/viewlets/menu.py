@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import operator
+
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from collective.taxonomy import PATH_SEPARATOR
 from collective.taxonomy.interfaces import ITaxonomy
@@ -20,11 +22,12 @@ class MenuViewlet(common.ViewletBase):
             return None
         target_language = str(utility.getCurrentLanguage(self.request))
         taxonomy_keys = utility.inverted_data[target_language]
-        targets_by_level = []
-
+        targets_by_level = {}
+        taxonomy_filled = []
+        index_filter = "taxonomy_{0}".format(taxonomy_name)
         if is_fill:
             portal_catalog = api.portal.get_tool('portal_catalog')
-            taxonomy_filled = portal_catalog.uniqueValuesFor("taxonomy_iam")
+            taxonomy_filled = portal_catalog.uniqueValuesFor(index_filter)
 
         for key, value in taxonomy_keys.iteritems():
             item = taxonomy_keys[key]
@@ -32,21 +35,33 @@ class MenuViewlet(common.ViewletBase):
             if all_path:
                 if len(targets) == target_level:
                     if is_fill and key in taxonomy_filled:
-                        targets_by_level.append(targets)
-                    else:
-                        targets_by_level.append(targets)
+                        targets_by_level[key] = targets
+                    elif not is_fill:
+                        targets_by_level[key] = targets
 
             else:
                 if len(targets) == target_level:
                     if is_fill and key in taxonomy_filled:
-                        targets_by_level.append(targets[-1])
-                    else:
-                        targets_by_level.append(targets[-1])
+                        targets_by_level[key] = targets[-1]
+                    elif not is_fill:
+                        targets_by_level[key] = targets[-1]
 
         return targets_by_level
 
-    def isearchlink(self):
-        print"bar"
+    def get_language(self):
+        return api.portal.get_current_language()[:2]
+
+    def taxonomies_links(self, taxonomy_name):
+        targets_by_level = self.generate_menu_value_by_taxonomy_level(taxonomy_name)
+        if not targets_by_level:
+            return None
+        sorted_targets_by_level = sorted(targets_by_level.items(), key=operator.itemgetter(1))
+        folder = "{0}_folder".format(taxonomy_name)
+        result = {}
+        for target in sorted_targets_by_level:
+            url = "{0}/{1}/{2}#c1={3}".format(api.portal.get().absolute_url(), self.get_language(), folder, target[0])
+            result[target[1]] = url
+        return result
 
     def get_taxonomy(self, name):
         portal = api.portal.get()

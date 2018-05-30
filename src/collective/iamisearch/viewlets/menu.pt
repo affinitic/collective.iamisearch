@@ -1,11 +1,12 @@
-<tal:block tal:define="iamlinks python: view.generate_menu_value_by_taxonomy_level('iam');
-                       isearchlinks python: view.generate_menu_value_by_taxonomy_level('isearch')">
+<tal:block tal:define="iamlinks python: view.taxonomies_links('iam');
+                       isearchlinks python: view.taxonomies_links('isearch')">
   <dl class="actionMenu" id="iamMenu" tal:condition="iamlinks">
     <dt class="actionMenuHeader">
       <a href="some_destination">I am</a>
     </dt>
-    <dd class="actionMenuContent" tal:repeat="linkname iamlinks">
-      <a href="#" tal:content="linkname"></a>
+
+    <dd class="actionMenuContent" tal:repeat="link iamlinks">
+      <a tal:attributes="href python:iamlinks[link]" tal:content="link"></a>
     </dd>
   </dl>
 
@@ -14,8 +15,8 @@
         <a href="some_destination">I search</a>
       </dt>
 
-      <dd class="actionMenuContent" tal:repeat="linkname isearchlinks">
-        <a href="#" tal:content="linkname"></a>
+      <dd class="actionMenuContent" tal:repeat="link isearchlinks">
+        <a tal:attributes="href python:isearchlinks[link]" tal:content="link"></a>
       </dd>
   </dl>
 </tal:block>
