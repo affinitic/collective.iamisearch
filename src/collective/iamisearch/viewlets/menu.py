@@ -7,10 +7,17 @@ from collective.taxonomy import PATH_SEPARATOR
 from collective.taxonomy.interfaces import ITaxonomy
 from plone import api
 from plone.app.layout.viewlets import common
-
+from Products.CMFPlone.resources import add_resource_on_request
 
 class MenuViewlet(common.ViewletBase):
     index = ViewPageTemplateFile('menu.pt')
+
+    def __call__(self):
+        # utility function to add resource to rendered page
+        import pdb;pdb.set_trace()
+        add_resource_on_request(self.request, 'collective-iamisearch-toggliamisearch')
+        return super(MenuViewlet, self).__call__()
+
 
     def generate_menu_value_by_taxonomy_level(self, taxonomy_name, target_level=1, all_path=False, is_fill=True):
         """
