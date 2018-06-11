@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
+import os
+from collective.iamisearch import _
 from Products.CMFPlone.interfaces import INonInstallable
 from collective.taxonomy.factory import registerTaxonomy
 from collective.taxonomy.interfaces import ITaxonomy
 from plone import api
+from plone.app.multilingual import api as api_lng
+from plone.i18n.normalizer.interfaces import IIDNormalizer
+from zope.component import getUtility
+from zope.i18n import translate
 from zope.i18n.interfaces import ITranslationDomain
 from zope.interface import implementer
 from zope.schema.interfaces import IVocabularyFactory
-from collective.iamisearch import _
-from Products.CMFPlone.interfaces import ILanguage
-from zope.i18n import translate
-from plone.app.multilingual import api as api_lng
-import os
 
 
 @implementer(INonInstallable)
@@ -40,11 +41,27 @@ def post_install(context):
         'field_description': 'Iamsearching',
         'default_language': 'fr',
     }
+
+    faced_config = {
+        'Iam': '/faceted/config/iam_folder.xml',
+        'Isearch': '/faceted/config/isearch_folder.xml',
+    }
+
+    # install taxonomy
+    portal = api.portal.get()
+    sm = portal.getSiteManager()
+    iam_item = 'collective.taxonomy.iam'
+    isearch_item = 'collective.taxonomy.isearch'
+    utility_iam = sm.queryUtility(ITaxonomy, name=iam_item)
+    utility_isearch = sm.queryUtility(ITaxonomy, name=isearch_item)
+
+    # stop installation if already
+    if utility_iam and utility_isearch:
+        return
+
     create_taxonomy_object(data_iam)
     create_taxonomy_object(data_isearch)
     #  remove taxonomy test
-    portal = api.portal.get()
-    sm = portal.getSiteManager()
     item = 'collective.taxonomy.test'
     utility = sm.queryUtility(ITaxonomy, name=item)
     if utility:
@@ -56,9 +73,23 @@ def post_install(context):
     # creation of two collections by language
     language_tool = api.portal.get_tool('portal_languages')
     langs = language_tool.supported_langs
+    current_lang = api.portal.get_current_language()[:2]
+    container = api.portal.get().get(current_lang)
+    if container is None:
+        container = api.portal.get()
     for taxonomy_collection in taxonomies_collection:
         title = "{0}_folder".format(taxonomy_collection)
-        create_folderish('Folder', title, api.portal.get()[langs[0]], langs)
+        normalizer = getUtility(IIDNormalizer)
+        if normalizer.normalize(title) not in container:
+            new_obj = api.content.create(
+                type='Folder',
+                title=title,
+                container=container)
+            _activate_dashboard_navigation(new_obj, faced_config[taxonomy_collection])
+            for lang in langs:
+                if lang != current_lang:
+                    translated_obj = translation_folderish(new_obj, lang)
+                    _activate_dashboard_navigation(translated_obj, faced_config[taxonomy_collection])
 
 
 def create_taxonomy_object(data):
@@ -74,21 +105,11 @@ def create_taxonomy_object(data):
     taxonomy.registerBehavior(**data)
 
 
-def create_folderish(type_content, title, parent, langs):
-    new_obj = api.content.create(
-        type=type_content,
-        title=title,
-        container=parent)
-    language = ILanguage(new_obj).get_language()
-    for lang in langs:
-        if language == lang:
-            _activate_dashboard_navigation(new_obj, '/faceted/config/iam_folder.xml')
-            continue
-        else:
-            translated_obj = api_lng.translate(new_obj, lang)
-            translated_obj.title = translate(_(title), target_language=lang)
-            translated_obj.reindexObject()
-            _activate_dashboard_navigation(translated_obj, '/faceted/config/iam_folder.xml')
+def translation_folderish(obj, lang):
+    translated_obj = api_lng.translate(obj, lang)
+    translated_obj.title = translate(_(obj.title), target_language=lang)
+    translated_obj.reindexObject()
+    return translated_obj
 
 
 def _activate_dashboard_navigation(context, config_path=''):

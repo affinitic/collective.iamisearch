@@ -43,6 +43,8 @@ setup(
         'Products.GenericSetup>=1.8.2',
         'setuptools',
         'z3c.jbot',
+        'collective.taxonomy',
+        'eea.facetednavigation',
     ],
     extras_require={
         'test': [
@@ -53,8 +55,6 @@ setup(
             'plone.testing>=5.0.0',
             'plone.app.contenttypes',
             'plone.app.robotframework[debug]',
-            'collective.taxonomy',
-            'eea.facetednavigation',
         ],
     },
     entry_points="""
