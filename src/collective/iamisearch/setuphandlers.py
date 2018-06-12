@@ -13,6 +13,7 @@ from zope.i18n.interfaces import ITranslationDomain
 from zope.interface import implementer
 from zope.schema.interfaces import IVocabularyFactory
 from zope.i18n import translate
+from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 
 
 @implementer(INonInstallable)
@@ -57,8 +58,8 @@ def post_install(context):
     utility_isearch = sm.queryUtility(ITaxonomy, name=isearch_item)
 
     # stop installation if already
-    if utility_iam and utility_isearch:
-        return
+    # if utility_iam and utility_isearch:
+    #     return
 
     create_taxonomy_object(data_iam)
     create_taxonomy_object(data_isearch)
@@ -86,6 +87,13 @@ def post_install(context):
                 type='Folder',
                 title=translate(_(title), target_language=current_lang),
                 container=container)
+            try:
+                nav = IExcludeFromNavigation(new_obj)
+            except:
+                pass
+            if nav:
+                nav.exclude_from_nav = True
+            new_obj.reindexObject()
             _activate_dashboard_navigation(new_obj, faced_config[taxonomy_collection])
             for lang in langs:
                 if lang != current_lang:
@@ -109,6 +117,12 @@ def create_taxonomy_object(data):
 def translation_folderish(obj, lang):
     translated_obj = api_lng.translate(obj, lang)
     translated_obj.title = translate(_(obj.title), target_language=lang)
+    try:
+        nav = IExcludeFromNavigation(translated_obj)
+    except:
+        pass
+    if nav:
+        nav.exclude_from_nav = True
     translated_obj.reindexObject()
     return translated_obj
 
