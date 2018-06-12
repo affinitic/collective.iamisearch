@@ -20,11 +20,11 @@ msgstr "Je suis"
 
 #: ../setuphandlers.py:35
 msgid "I am searching"
-msgstr "Je suis en train de chercher"
+msgstr "Je trouve"
 
 #: ../setuphandlers.py:31
 msgid "I search"
-msgstr "Je cherche"
+msgstr "Je trouve"
 
 #: ../configure.zcml:33
 msgid "Installs the collective.iamisearch add-on."
