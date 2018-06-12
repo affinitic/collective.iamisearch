@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
+
 from collective.iamisearch import _
+
 from Products.CMFPlone.interfaces import INonInstallable
 from collective.taxonomy.factory import registerTaxonomy
 from collective.taxonomy.interfaces import ITaxonomy
 from plone import api
+from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.multilingual import api as api_lng
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from zope.component import getUtility
@@ -12,8 +15,6 @@ from zope.i18n import translate
 from zope.i18n.interfaces import ITranslationDomain
 from zope.interface import implementer
 from zope.schema.interfaces import IVocabularyFactory
-from zope.i18n import translate
-from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 
 
 @implementer(INonInstallable)
@@ -60,7 +61,6 @@ def post_install(context):
     # stop installation if already
     # if utility_iam and utility_isearch:
     #     return
-
     create_taxonomy_object(data_iam)
     create_taxonomy_object(data_isearch)
     #  remove taxonomy test
