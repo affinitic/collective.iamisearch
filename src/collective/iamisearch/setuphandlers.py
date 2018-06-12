@@ -59,8 +59,8 @@ def post_install(context):
     utility_isearch = sm.queryUtility(ITaxonomy, name=isearch_item)
 
     # stop installation if already
-    # if utility_iam and utility_isearch:
-    #     return
+    if utility_iam and utility_isearch:
+        return
     create_taxonomy_object(data_iam)
     create_taxonomy_object(data_isearch)
     #  remove taxonomy test
