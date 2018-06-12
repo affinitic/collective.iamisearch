@@ -4,7 +4,7 @@
   i18n_domain="collective.iamisearch">
 
   <browser:viewlet
-    name="cirb.welcome_text"
+    name="collective.iamisearch.menu"
     manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
     class=".menu.MenuViewlet"
     permission="cmf.SetOwnPassword"
