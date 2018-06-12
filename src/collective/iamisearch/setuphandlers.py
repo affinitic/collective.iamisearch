@@ -12,6 +12,7 @@ from zope.i18n import translate
 from zope.i18n.interfaces import ITranslationDomain
 from zope.interface import implementer
 from zope.schema.interfaces import IVocabularyFactory
+from zope.i18n import translate
 
 
 @implementer(INonInstallable)
@@ -27,24 +28,24 @@ class HiddenProfiles(object):
 def post_install(context):
     """Post install script"""
     # creation of taxonomies
-    taxonomies_collection = ['Iam', 'Isearch']
+    taxonomies_collection = [_('I am'), _('I search')]
     data_iam = {
         'taxonomy': 'iam',
-        'field_title': 'Iam',
-        'field_description': 'Iamsearching',
+        'field_title': _('I am'),
+        'field_description': _('I am searching'),
         'default_language': 'fr',
     }
 
     data_isearch = {
         'taxonomy': 'isearch',
-        'field_title': 'Isearch',
-        'field_description': 'Iamsearching',
+        'field_title': _('I search'),
+        'field_description': _('I search'),
         'default_language': 'fr',
     }
 
     faced_config = {
-        'Iam': '/faceted/config/iam_folder.xml',
-        'Isearch': '/faceted/config/isearch_folder.xml',
+        'I am': '/faceted/config/iam_folder.xml',
+        'I search': '/faceted/config/isearch_folder.xml',
     }
 
     # install taxonomy
@@ -78,12 +79,12 @@ def post_install(context):
     if container is None:
         container = api.portal.get()
     for taxonomy_collection in taxonomies_collection:
-        title = "{0}_folder".format(taxonomy_collection)
+        title = taxonomy_collection
         normalizer = getUtility(IIDNormalizer)
         if normalizer.normalize(title) not in container:
             new_obj = api.content.create(
                 type='Folder',
-                title=title,
+                title=translate(_(title), target_language=current_lang),
                 container=container)
             _activate_dashboard_navigation(new_obj, faced_config[taxonomy_collection])
             for lang in langs:
