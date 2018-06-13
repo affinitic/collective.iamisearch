@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import os
 from collective.iamisearch import _
+
 from Products.CMFPlone.interfaces import INonInstallable
 from collective.taxonomy.factory import registerTaxonomy
 from collective.taxonomy.interfaces import ITaxonomy
 from plone import api
+from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.multilingual import api as api_lng
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from zope.component import getUtility
@@ -59,7 +61,6 @@ def post_install(context):
     # stop installation if already
     if utility_iam and utility_isearch:
         return
-
     create_taxonomy_object(data_iam)
     create_taxonomy_object(data_isearch)
     #  remove taxonomy test
@@ -86,6 +87,13 @@ def post_install(context):
                 type='Folder',
                 title=translate(_(title), target_language=current_lang),
                 container=container)
+            try:
+                nav = IExcludeFromNavigation(new_obj)
+            except:
+                pass
+            if nav:
+                nav.exclude_from_nav = True
+            new_obj.reindexObject()
             _activate_dashboard_navigation(new_obj, faced_config[taxonomy_collection])
             for lang in langs:
                 if lang != current_lang:
@@ -109,6 +117,12 @@ def create_taxonomy_object(data):
 def translation_folderish(obj, lang):
     translated_obj = api_lng.translate(obj, lang)
     translated_obj.title = translate(_(obj.title), target_language=lang)
+    try:
+        nav = IExcludeFromNavigation(translated_obj)
+    except:
+        pass
+    if nav:
+        nav.exclude_from_nav = True
     translated_obj.reindexObject()
     return translated_obj
 

@@ -1,0 +1,6 @@
+dl.actionMenu.deactivated dt {
+margin: 0 0.25em;
+}
+dl.actionMenu.deactivated dd {
+    display: none;
+}
