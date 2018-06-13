@@ -64,6 +64,7 @@ class MenuViewlet(common.ViewletBase):
             return None
         sorted_targets_by_level = sorted(targets_by_level.items(), key=operator.itemgetter(1))
         folder = "{0}_folder".format(taxonomy_name)
+
         result = {}
         for target in sorted_targets_by_level:
             url = "{0}/{1}/{2}#c1={3}".format(api.portal.get().absolute_url(), self.get_language(), folder, target[0])

@@ -1,9 +1,12 @@
 <?xml version="1.0"?>
 <registry>
 
-  <records prefix="plone.resources/collective-iamisearch-toggliamisearch"
+  <records prefix="plone.resources/collective.iamisearch.js"
            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-    <value key="js">++plone++collective.iamisearch/toggliamisearch.js</value>
+    <value key="js">++plone++collective.iamisearch/collective.iamisearch.js</value>
+    <value key="css">
+      <element>++plone++collective.iamisearch/collective.iamisearch.css</element>
+    </value>
 
   </records>
 
