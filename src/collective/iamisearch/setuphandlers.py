@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
+
+from Products.CMFCore.utils import getToolByName
 from collective.iamisearch import _
+from plone.dexterity.interfaces import IDexterityFTI
 
 from Products.CMFPlone.interfaces import INonInstallable
 from collective.taxonomy.factory import registerTaxonomy
@@ -9,7 +12,7 @@ from plone import api
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.multilingual import api as api_lng
 from plone.i18n.normalizer.interfaces import IIDNormalizer
-from zope.component import getUtility
+from zope.component import getUtility, queryUtility
 from zope.i18n.interfaces import ITranslationDomain
 from zope.interface import implementer
 from zope.schema.interfaces import IVocabularyFactory
@@ -29,18 +32,23 @@ class HiddenProfiles(object):
 def post_install(context):
     """Post install script"""
     # creation of taxonomies
+
+    language_tool = api.portal.get_tool('portal_languages')
+    langs = language_tool.supported_langs
+    current_lang = api.portal.get_current_language()[:2]
+
     taxonomies_collection = ['I am', 'I search']
     data_iam = {
         'taxonomy': 'iam',
-        'field_title': _('I am'),
-        'field_description': _('I am searching'),
+        'field_title': translate(_('I am'), target_language=current_lang),
+        'field_description': '',
         'default_language': 'fr',
     }
 
     data_isearch = {
         'taxonomy': 'isearch',
-        'field_title': _('I search'),
-        'field_description': _('I search'),
+        'field_title': translate(_('I search'), target_language=current_lang),
+        'field_description': '',
         'default_language': 'fr',
     }
 
@@ -59,10 +67,13 @@ def post_install(context):
 
     # stop installation if already
     if utility_iam and utility_isearch:
+        enable_taxonomies_content_type()
         return
+
     create_taxonomy_object(data_iam)
     create_taxonomy_object(data_isearch)
-    #  remove taxonomy test
+
+     # remove taxonomy test
     item = 'collective.taxonomy.test'
     utility = sm.queryUtility(ITaxonomy, name=item)
     if utility:
@@ -71,10 +82,10 @@ def post_install(context):
         sm.unregisterUtility(utility, IVocabularyFactory, name=item)
         sm.unregisterUtility(utility, ITranslationDomain, name=item)
 
+
+    enable_taxonomies_content_type()
     # creation of two collections by language
-    language_tool = api.portal.get_tool('portal_languages')
-    langs = language_tool.supported_langs
-    current_lang = api.portal.get_current_language()[:2]
+
     container = api.portal.get().get(current_lang)
     if container is None:
         container = api.portal.get()
@@ -102,7 +113,6 @@ def post_install(context):
                 if lang != current_lang:
                     translated_obj = translation_folderish(new_obj, lang, title)
                     _activate_dashboard_navigation(translated_obj, faced_config[taxonomy_collection])
-
 
 def create_taxonomy_object(data):
     taxonomy = registerTaxonomy(
@@ -143,6 +153,24 @@ def _activate_dashboard_navigation(context, config_path=''):
     context.unrestrictedTraverse('@@faceted_exportimport').import_xml(
         import_file=open(os.path.dirname(__file__) + config_path)
     )
+
+def enable_taxonomies_content_type():
+    portal_types = getToolByName(api.portal.get(), "portal_types")
+    types = portal_types.listContentTypes()
+    for type in types:
+        add_behavior(type, 'collective.taxonomy.generated.iam')
+        add_behavior(type, 'collective.taxonomy.generated.isearch')
+
+
+def add_behavior(type_name, behavior_name):
+    """Add a behavior to a type"""
+    fti = queryUtility(IDexterityFTI, name=type_name)
+    if not fti:
+        return
+    behaviors = list(fti.behaviors)
+    if behavior_name not in behaviors:
+        behaviors.append(behavior_name)
+        fti._updateProperty('behaviors', tuple(behaviors))
 
 
 def uninstall(context):
