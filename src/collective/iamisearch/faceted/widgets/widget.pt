@@ -16,7 +16,8 @@
      tal:condition="vocabulary">
 
   <fieldset class="widget-fieldset"
-            tal:define="title python:view.data.get('title', '')">
+            tal:define="title python:view.data.get('title', '')"
+            style="visibility:hidden;">
     <legend tal:content="
   python:view.translate(title)" i18n:translate="">Current Search</legend>
     <form action="." method="get"

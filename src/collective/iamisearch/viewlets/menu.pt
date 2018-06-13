@@ -1,5 +1,6 @@
 <tal:block tal:define="iamlinks python: view.taxonomies_links('iam','I am');
-                       isearchlinks python: view.taxonomies_links('isearch', 'I search')">
+                       isearchlinks python: view.taxonomies_links('isearch', 'I search')"
+           i18n:domain="collective.iamisearch">
   <head>
     <script src="++plone++collective.iamisearch/collective.iamisearch.js"></script>
   </head>
@@ -12,11 +13,12 @@ dl.actionMenu.deactivated dd {
     display: none;
 }
 
+
   </style>
 
   <dl class="actionMenu" tal:condition="iamlinks">
     <dt class="actionMenuHeader">
-      <a href="#">I am</a>
+      <a href="#" i18n:translate="">I am</a>
     </dt>
     <dd class="actionMenuContent" tal:repeat="link iamlinks">
       <a tal:attributes="href python:iamlinks[link]" tal:content="link"></a>
@@ -24,11 +26,11 @@ dl.actionMenu.deactivated dd {
   </dl>
 
   <dl class="actionMenu" tal:condition="isearchlinks">
-  <dt class="actionMenuHeader">
-  <a href="some_destination">I search</a>
-  </dt>
-  <dd class="actionMenuContent" tal:repeat="link isearchlinks">
-  <a tal:attributes="href python:isearchlinks[link]" tal:content="link"></a>
-  </dd>
+    <dt class="actionMenuHeader">
+      <a href="#" i18n:translate="">I search</a>
+    </dt>
+    <dd class="actionMenuContent" tal:repeat="link isearchlinks">
+      <a tal:attributes="href python:isearchlinks[link]" tal:content="link"></a>
+    </dd>
   </dl>
 </tal:block>

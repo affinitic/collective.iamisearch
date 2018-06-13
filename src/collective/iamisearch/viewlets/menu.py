@@ -77,7 +77,7 @@ class MenuViewlet(common.ViewletBase):
         folder = normalizer.normalize(translate_title)
         result = {}
         for target in sorted_targets_by_level:
-            url = "{0}/{1}/{2}#c1={3}".format(api.portal.get().absolute_url(), self.get_language(), folder, target[0])
+            url = "{0}/{1}/{2}#c0={3}".format(api.portal.get().absolute_url(), self.get_language(), folder, target[0])
             result[target[1]] = url
         return result
 
