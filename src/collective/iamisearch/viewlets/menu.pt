@@ -1,5 +1,5 @@
-<tal:block tal:define="iamlinks python: view.taxonomies_links('iam');
-                       isearchlinks python: view.taxonomies_links('isearch')">
+<tal:block tal:define="iamlinks python: view.taxonomies_links('iam','I am');
+                       isearchlinks python: view.taxonomies_links('isearch', 'I search')">
   <head>
     <script src="++plone++collective.iamisearch/collective.iamisearch.js"></script>
   </head>

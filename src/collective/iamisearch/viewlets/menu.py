@@ -2,19 +2,26 @@
 
 import operator
 
+from collective.iamisearch import _
+
+from Products.CMFPlone.resources import add_resource_on_request
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from collective.taxonomy import PATH_SEPARATOR
 from collective.taxonomy.interfaces import ITaxonomy
 from plone import api
 from plone.app.layout.viewlets import common
-from Products.CMFPlone.resources import add_resource_on_request
+from plone.i18n.normalizer.interfaces import IIDNormalizer
+from zope.component import getUtility
+from zope.i18n import translate
+
 
 class MenuViewlet(common.ViewletBase):
     index = ViewPageTemplateFile('menu.pt')
 
     def __call__(self):
         # utility function to add resource to rendered page
-        import pdb;pdb.set_trace()
+        import pdb;
+        pdb.set_trace()
         add_resource_on_request(self.request, 'collective-iamisearch-toggliamisearch')
         return super(MenuViewlet, self).__call__()
 
@@ -58,13 +65,16 @@ class MenuViewlet(common.ViewletBase):
     def get_language(self):
         return api.portal.get_current_language()[:2]
 
-    def taxonomies_links(self, taxonomy_name):
+    def taxonomies_links(self, taxonomy_name, taxonomy_title):
         targets_by_level = self.generate_menu_value_by_taxonomy_level(taxonomy_name)
         if not targets_by_level:
             return None
         sorted_targets_by_level = sorted(targets_by_level.items(), key=operator.itemgetter(1))
-        folder = "{0}_folder".format(taxonomy_name)
 
+        current_lang = api.portal.get_current_language()[:2]
+        translate_title = translate(_(taxonomy_title), target_language=current_lang)
+        normalizer = getUtility(IIDNormalizer)
+        folder = normalizer.normalize(translate_title)
         result = {}
         for target in sorted_targets_by_level:
             url = "{0}/{1}/{2}#c1={3}".format(api.portal.get().absolute_url(), self.get_language(), folder, target[0])

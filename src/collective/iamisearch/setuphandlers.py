@@ -10,7 +10,6 @@ from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.multilingual import api as api_lng
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from zope.component import getUtility
-from zope.i18n import translate
 from zope.i18n.interfaces import ITranslationDomain
 from zope.interface import implementer
 from zope.schema.interfaces import IVocabularyFactory
@@ -30,7 +29,7 @@ class HiddenProfiles(object):
 def post_install(context):
     """Post install script"""
     # creation of taxonomies
-    taxonomies_collection = [_('I am'), _('I search')]
+    taxonomies_collection = ['I am', 'I search']
     data_iam = {
         'taxonomy': 'iam',
         'field_title': _('I am'),
@@ -81,12 +80,16 @@ def post_install(context):
         container = api.portal.get()
     for taxonomy_collection in taxonomies_collection:
         title = taxonomy_collection
+        translate_title = translate(_(title), target_language=current_lang)
         normalizer = getUtility(IIDNormalizer)
+        new_id = normalizer.normalize(translate_title)
         if normalizer.normalize(title) not in container:
             new_obj = api.content.create(
                 type='Folder',
-                title=translate(_(title), target_language=current_lang),
+                title=translate_title,
                 container=container)
+            if new_obj.id != new_id:
+                api.content.rename(new_obj, new_id=new_id)
             try:
                 nav = IExcludeFromNavigation(new_obj)
             except:
@@ -97,7 +100,7 @@ def post_install(context):
             _activate_dashboard_navigation(new_obj, faced_config[taxonomy_collection])
             for lang in langs:
                 if lang != current_lang:
-                    translated_obj = translation_folderish(new_obj, lang)
+                    translated_obj = translation_folderish(new_obj, lang, title)
                     _activate_dashboard_navigation(translated_obj, faced_config[taxonomy_collection])
 
 
@@ -114,9 +117,14 @@ def create_taxonomy_object(data):
     taxonomy.registerBehavior(**data)
 
 
-def translation_folderish(obj, lang):
+def translation_folderish(obj, lang, title):
     translated_obj = api_lng.translate(obj, lang)
-    translated_obj.title = translate(_(obj.title), target_language=lang)
+    translate_title = translate(_(title), target_language=lang)
+    normalizer = getUtility(IIDNormalizer)
+    new_id = normalizer.normalize(translate_title)
+    translated_obj.title = translate_title
+    if translated_obj.id != new_id:
+        api.content.rename(translated_obj, new_id=new_id)
     try:
         nav = IExcludeFromNavigation(translated_obj)
     except:
