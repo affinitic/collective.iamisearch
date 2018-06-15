@@ -18,12 +18,12 @@ from zope.i18n import translate
 class MenuViewlet(common.ViewletBase):
     index = ViewPageTemplateFile('menu.pt')
 
-    def __call__(self):
+    def update(self):
         # utility function to add resource to rendered page
-        import pdb;
-        pdb.set_trace()
-        add_resource_on_request(self.request, 'collective-iamisearch-toggliamisearch')
-        return super(MenuViewlet, self).__call__()
+      add_resource_on_request(self.request, '++resource++collective.iamisearch.js.collective.iamisearch.js')
+      add_resource_on_request(self.request, 'collective.iamisearch.js.collective.iamisearch.js')
+      super(MenuViewlet, self).update()
+
 
 
     def generate_menu_value_by_taxonomy_level(self, taxonomy_name, target_level=1, all_path=False, is_fill=True):
@@ -76,8 +76,13 @@ class MenuViewlet(common.ViewletBase):
         normalizer = getUtility(IIDNormalizer)
         folder = normalizer.normalize(translate_title)
         result = {}
+        language_tool = api.portal.get_tool('portal_languages')
+        langs = language_tool.supported_langs
         for target in sorted_targets_by_level:
-            url = "{0}/{1}/{2}#c0={3}".format(api.portal.get().absolute_url(), self.get_language(), folder, target[0])
+            if len(langs) > 1:
+                url = "{0}/{1}/{2}#c0={3}".format(api.portal.get().absolute_url(), self.get_language(), folder, target[0])
+            else:
+                url = "{0}/{1}#c0={2}".format(api.portal.get().absolute_url(), folder, target[0])
             result[target[1]] = url
         return result
 

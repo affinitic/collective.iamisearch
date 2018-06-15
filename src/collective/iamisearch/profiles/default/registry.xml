@@ -1,14 +1,20 @@
 <?xml version="1.0"?>
 <registry>
 
-  <records prefix="plone.resources/collective.iamisearch.js"
+  <records prefix="plone.resources/collective.iamisearch"
            interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-    <value key="js">++plone++collective.iamisearch/collective.iamisearch.js</value>
+    <value key="js">++resource++collective.iamisearch.js.collective.iamisearch.js</value>
     <value key="css">
-      <element>++plone++collective.iamisearch/collective.iamisearch.css</element>
+      <element>++resource++collective.iamisearch.css.collective-iamisearch.css</element>
     </value>
-
   </records>
 
+  <!-- bundles -->
+  <records prefix="plone.bundles/default"
+           interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+    <value key="resources" purge="false">
+      <element>collective.iamisearch</element>
+    </value>
+  </records>
 
 </registry>

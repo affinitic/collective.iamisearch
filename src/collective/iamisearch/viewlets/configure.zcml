@@ -10,4 +10,6 @@
     permission="cmf.SetOwnPassword"
     layer="..interfaces.ICollectiveIamisearchLayer"
   />
+
+
 </configure>

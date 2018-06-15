@@ -2,16 +2,10 @@
                        isearchlinks python: view.taxonomies_links('isearch', 'I search')"
            i18n:domain="collective.iamisearch">
   <head>
-    <script src="++plone++collective.iamisearch/collective.iamisearch.js"></script>
+    <!--<script src="++resource++collective.iamisearch.js.collective.iamisearch.js"></script>-->
   </head>
   <style>
 
-  dl.actionMenu.deactivated dt {
-margin: 0 0.25em;
-}
-dl.actionMenu.deactivated dd {
-    display: none;
-}
 
 
   </style>
