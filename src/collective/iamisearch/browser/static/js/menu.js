@@ -51,7 +51,6 @@ function actionMenuMouseOver(event) {
 }
 
 function initializeMenus() {
-    alert("foo");
     jQuery(document).mousedown(actionMenuDocumentMouseDown);
 
     hideAllMenus();
