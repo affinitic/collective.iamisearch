@@ -11,12 +11,14 @@
       layer="collective.iamisearch.interfaces.ICollectiveIamisearchLayer"
       />
 
-  <browser:resource
-    name="collective.iamisearch.css.collective-iamisearch.css"
-    file="./static/css/collective-iamisearch.css"/>
+  <browser:resourceDirectory
+    name="collective.iamisearch.stylesheets"
+    directory="static/css"
+    />
 
-  <browser:resource
-    name="collective.iamisearch.js.collective.iamisearch.js"
-    file="./static/js/collective.iamisearch.js"/>
+  <browser:resourceDirectory
+    name="collective.iamisearch.javascripts"
+    directory="static/js"
+    />
 
 </configure>

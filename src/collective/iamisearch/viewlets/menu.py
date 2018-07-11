@@ -4,7 +4,6 @@ import operator
 
 from collective.iamisearch import _
 
-from Products.CMFPlone.resources import add_resource_on_request
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from collective.taxonomy import PATH_SEPARATOR
 from collective.taxonomy.interfaces import ITaxonomy
@@ -17,14 +16,6 @@ from zope.i18n import translate
 
 class MenuViewlet(common.ViewletBase):
     index = ViewPageTemplateFile('menu.pt')
-
-    def update(self):
-        # utility function to add resource to rendered page
-      add_resource_on_request(self.request, '++resource++collective.iamisearch.js.collective.iamisearch.js')
-      add_resource_on_request(self.request, 'collective.iamisearch.js.collective.iamisearch.js')
-      super(MenuViewlet, self).update()
-
-
 
     def generate_menu_value_by_taxonomy_level(self, taxonomy_name, target_level=1, all_path=False, is_fill=True):
         """

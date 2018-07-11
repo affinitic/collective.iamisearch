@@ -1,14 +1,6 @@
 <tal:block tal:define="iamlinks python: view.taxonomies_links('iam','I am');
                        isearchlinks python: view.taxonomies_links('isearch', 'I search')"
            i18n:domain="collective.iamisearch">
-  <head>
-    <!--<script src="++resource++collective.iamisearch.js.collective.iamisearch.js"></script>-->
-  </head>
-  <style>
-
-
-
-  </style>
 
   <dl class="actionMenu" tal:condition="iamlinks">
     <dt class="actionMenuHeader">
