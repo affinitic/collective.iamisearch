@@ -19,6 +19,10 @@
 
   <include file="upgrades.zcml" />
 
+  <include package=".viewlets" />
+  <include package="eea.facetednavigation" />
+  <include package=".faceted" />
+
   <genericsetup:registerProfile
       name="default"
       title="collective.iamisearch"

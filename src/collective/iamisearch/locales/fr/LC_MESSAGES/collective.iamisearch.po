@@ -1,6 +1,3 @@
-# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
-# SOME DESCRIPTIVE TITLE.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -15,17 +12,17 @@ msgstr ""
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: collective.iamisearch\n"
+"Domain: DOMAIN\n"
 
 #: ../setuphandlers.py:43
 #: ../viewlets/menu.pt:15
 msgid "I am"
-msgstr ""
+msgstr "Je suis"
 
 #: ../setuphandlers.py:50
 #: ../viewlets/menu.pt:24
 msgid "I search"
-msgstr ""
+msgstr "Je trouve"
 
 #: ../configure.zcml:33
 msgid "Installs the collective.iamisearch add-on."

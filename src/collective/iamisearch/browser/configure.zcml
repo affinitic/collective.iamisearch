@@ -11,11 +11,14 @@
       layer="collective.iamisearch.interfaces.ICollectiveIamisearchLayer"
       />
 
-  <!-- Publish static files -->
-  <plone:static
-      name="collective.iamisearch"
-      type="plone"
-      directory="static"
-      />
+  <browser:resourceDirectory
+    name="collective.iamisearch.stylesheets"
+    directory="static/css"
+    />
+
+  <browser:resourceDirectory
+    name="collective.iamisearch.javascripts"
+    directory="static/js"
+    />
 
 </configure>
