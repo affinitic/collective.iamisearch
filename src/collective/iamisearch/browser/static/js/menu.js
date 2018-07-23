@@ -14,57 +14,41 @@ require([
 ], function($) {
   'use strict';
 
+    $.fn.toggleAttr = function(attr, attr1, attr2) {
+        return this.each(function() {
+            var self = $(this);
+            if (self.attr(attr) == attr1)
+                self.attr(attr, attr2);
+            else
+                self.attr(attr, attr1);
+        });
+    };
 
+    $(document).click(function(event) {
+        var nav = $('nav.action');
+        if(!$(event.target).closest(nav).length) {
+            jQuery(nav).children('ul.actionMenu').removeClass('activated').addClass('deactivated');
+            jQuery(nav).children('ul.actionMenu').find('.actionMenuHeader').attr('aria-expanded', 'false');
+            jQuery(nav).children('ul.actionMenu').find('.actionMenuContent').attr('aria-hidden', 'true');
+        }
+    });
 
-
-function hideAllMenus() {
-    jQuery('dl.actionMenu').removeClass('activated').addClass('deactivated');
-}
-
-function toggleMenuHandler(event) {
-    // swap between activated and deactivated
-    jQuery(this).parents('.actionMenu:first')
-        .toggleClass('deactivated')
-        .toggleClass('activated');
-    return false;
-}
-
-function actionMenuDocumentMouseDown(event) {
-    if (jQuery(event.target).parents('.actionMenu:first').length) {
-        // target is part of the menu, so just return and do the default
-        return true;
+    function toggleMenuHandler(event) {
+        // swap between activated and deactivated
+        jQuery(this).siblings().removeClass('activated').addClass('deactivated');
+        jQuery(this).siblings().find('.actionMenuHeader').attr('aria-expanded', 'false');
+        jQuery(this).siblings().find('.actionMenuContent').attr('aria-hidden', 'true');
+        jQuery(this).toggleClass('deactivated activated');
+        jQuery(this).find('.actionMenuHeader').toggleAttr('aria-expanded', 'true', 'false');
+        jQuery(this).find('.actionMenuContent').toggleAttr('aria-hidden', 'true', 'false');
     }
 
-    hideAllMenus();
-}
-
-function actionMenuMouseOver(event) {
-    var menu_id = jQuery(this).parents('.actionMenu:first').attr('id'),
-        switch_menu;
-    if (!menu_id) {return true;}
-
-    switch_menu = jQuery('dl.actionMenu.activated').length > 0;
-    jQuery('dl.actionMenu').removeClass('activated').addClass('deactivated');
-    if (switch_menu) {
-        jQuery('#' + menu_id).removeClass('deactivated').addClass('activated');
+    function initializeMenus() {
+        // add toggle function to header links
+        jQuery('ul.actionMenu')
+            .click(toggleMenuHandler);
     }
-}
 
-function initializeMenus() {
-    jQuery(document).mousedown(actionMenuDocumentMouseDown);
-
-    hideAllMenus();
-
-    // add toggle function to header links
-    jQuery('dl.actionMenu dt.actionMenuHeader a')
-        .click(toggleMenuHandler)
-        .mouseover(actionMenuMouseOver);
-
-    // add hide function to all links in the dropdown, so the dropdown closes
-    // when any link is clicked
-    jQuery('dl.actionMenu > dd.actionMenuContent').click(hideAllMenus);
-}
-
-jQuery(initializeMenus);
+    jQuery(initializeMenus);
 
 });
