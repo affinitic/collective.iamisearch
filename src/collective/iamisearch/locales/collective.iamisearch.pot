@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2018-06-13 11:48+0000\n"
+"POT-Creation-Date: 2018-09-21 11:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,12 +18,12 @@ msgstr ""
 "Domain: collective.iamisearch\n"
 
 #: ../setuphandlers.py:43
-#: ../viewlets/menu.pt:15
+#: ../viewlets/menu.pt:7
 msgid "I am"
 msgstr ""
 
 #: ../setuphandlers.py:50
-#: ../viewlets/menu.pt:24
+#: ../viewlets/menu.pt:16
 msgid "I search"
 msgstr ""
 
