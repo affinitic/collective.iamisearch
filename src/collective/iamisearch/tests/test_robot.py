@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone.app.testing import ROBOT_TEST_LEVEL
 from plone.testing import layered
-from collective.iamisearch.testing import COLLECTIVE_IAMISEARCH_ACCEPTANCE_TESTING  # noqa
+from collective.iamisearch.testing import COLLECTIVE_IAMISEARCH_ACCEPTANCE_TESTING
 
 import os
 import robotsuite

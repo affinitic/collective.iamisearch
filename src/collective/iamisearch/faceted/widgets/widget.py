@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ Select widget
 """
 from eea.facetednavigation.widgets.select.widget import Widget

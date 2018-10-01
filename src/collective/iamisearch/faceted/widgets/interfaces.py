@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ Widget interfaces and schema
 """
 from eea.facetednavigation.widgets.select.interfaces import ISelectSchema

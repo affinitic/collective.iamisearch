@@ -3,7 +3,7 @@
 from plone import api
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
-from collective.iamisearch.testing import COLLECTIVE_IAMISEARCH_INTEGRATION_TESTING  # noqa
+from collective.iamisearch.testing import COLLECTIVE_IAMISEARCH_INTEGRATION_TESTING
 
 import unittest
 

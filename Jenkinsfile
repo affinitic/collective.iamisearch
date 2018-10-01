@@ -1,4 +1,4 @@
-@Library('affinitic@buildout') _
+@Library('affinitic') _
 
 buildout {
    projectName = "Project1"
