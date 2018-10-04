@@ -15,7 +15,7 @@ long_description = '\n\n'.join([
 setup(
     name='collective.iamisearch',
     version='1.0.1.dev0',
-    description="An add-on for Plone",
+    description="Adds 'I am' and 'I search' dropdown menus in Plone",
     long_description=long_description,
     # Get more from https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
