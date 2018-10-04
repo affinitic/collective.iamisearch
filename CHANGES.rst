@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-1.0a2 (unreleased)
-------------------
+1.0 (2018-10-04)
+----------------
 
 - Fix styles for Plone 5
   [AuroreMariscal]
