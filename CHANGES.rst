@@ -5,6 +5,9 @@ Changelog
 1.0.1 (unreleased)
 ------------------
 
+- Add missing Dutch translations
+  [laulaz]
+
 - Fix menu entries sort order
   [laulaz]
 

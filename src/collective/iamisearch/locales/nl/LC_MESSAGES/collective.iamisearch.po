@@ -17,20 +17,20 @@ msgstr ""
 #: ../setuphandlers.py:43
 #: ../viewlets/menu.pt:7
 msgid "I am"
-msgstr ""
+msgstr "Ik ben"
 
 #: ../setuphandlers.py:50
 #: ../viewlets/menu.pt:16
 msgid "I search"
-msgstr ""
+msgstr "Ik vind"
 
 #: ../configure.zcml:33
 msgid "Installs the collective.iamisearch add-on."
-msgstr ""
+msgstr "Installeer collective.iamisearch"
 
 #: ../configure.zcml:42
 msgid "Uninstalls the collective.iamisearch add-on."
-msgstr ""
+msgstr "collective.iamisearch deïnstalleren"
 
 #: ../configure.zcml:33
 msgid "collective.iamisearch"
