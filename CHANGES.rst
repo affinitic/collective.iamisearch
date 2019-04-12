@@ -5,7 +5,8 @@ Changelog
 1.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix menu entries sort order
+  [laulaz]
 
 
 1.0 (2018-10-04)

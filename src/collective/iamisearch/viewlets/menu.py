@@ -5,6 +5,7 @@ import operator
 from collective.iamisearch import _
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from collections import OrderedDict
 from collective.taxonomy import PATH_SEPARATOR
 from collective.taxonomy.interfaces import ITaxonomy
 from plone import api
@@ -66,7 +67,7 @@ class MenuViewlet(common.ViewletBase):
         translate_title = translate(_(taxonomy_title), target_language=current_lang)
         normalizer = getUtility(IIDNormalizer)
         folder = normalizer.normalize(translate_title)
-        result = {}
+        result = OrderedDict()
         language_tool = api.portal.get_tool('portal_languages')
         langs = language_tool.supported_langs
         for target in sorted_targets_by_level:
