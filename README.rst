@@ -4,8 +4,8 @@ collective.iamisearch
 
 This products allows you to categorize contents with terms from two editable taxonomies and get a dropdown menu with those terms to find related contents.
 There are :
- - "I am" terms
- - "I search" terms
+- "I am" terms
+- "I search" terms
 
 
 Features
