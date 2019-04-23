@@ -21,6 +21,7 @@ Translations
 This product has been translated into
 
 - French
+- Dutch
 
 
 Installation
