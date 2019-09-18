@@ -5,7 +5,8 @@ Changelog
 1.0.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Display menu to public (and not only Members)
+  [laulaz]
 
 
 1.0.1 (2019-04-23)
