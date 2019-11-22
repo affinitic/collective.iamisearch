@@ -5,6 +5,12 @@ Changelog
 1.0.2 (unreleased)
 ------------------
 
+- Improve faceted widget :
+   * "All" option makes no sense
+   * show widget by default to allow changing value
+   * translate widget title
+  [laulaz]
+
 - Display menu to public (and not only Members)
   [laulaz]
 

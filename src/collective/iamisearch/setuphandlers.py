@@ -53,8 +53,8 @@ def post_install(context):
     }
 
     faced_config = {
-        'I am': '/faceted/config/iam_folder.xml',
-        'I search': '/faceted/config/isearch_folder.xml',
+        'I am': '/faceted/config/iam_folder_{0}.xml',
+        'I search': '/faceted/config/isearch_folder_{0}.xml',
     }
 
     # install taxonomy
@@ -108,11 +108,11 @@ def post_install(context):
             if nav:
                 nav.exclude_from_nav = True
             new_obj.reindexObject()
-            _activate_dashboard_navigation(new_obj, faced_config[taxonomy_collection])
+            _activate_dashboard_navigation(new_obj, faced_config[taxonomy_collection].format(current_lang))
             for lang in langs:
                 if lang != current_lang:
                     translated_obj = translation_folderish(new_obj, lang, title)
-                    _activate_dashboard_navigation(translated_obj, faced_config[taxonomy_collection])
+                    _activate_dashboard_navigation(translated_obj, faced_config[taxonomy_collection].format(lang))
 
 def create_taxonomy_object(data):
     taxonomy = registerTaxonomy(

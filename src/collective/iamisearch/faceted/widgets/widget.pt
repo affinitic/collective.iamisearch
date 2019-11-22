@@ -16,8 +16,7 @@
      tal:condition="vocabulary">
 
   <fieldset class="widget-fieldset"
-            tal:define="title python:view.data.get('title', '')"
-            style="visibility:hidden;">
+            tal:define="title python:view.data.get('title', '')">
     <legend tal:content="
   python:view.translate(title)" i18n:translate="">Current Search</legend>
     <form action="." method="get"
@@ -27,11 +26,6 @@
              tal:content="python:view.translate(title)" />
       <select tal:define="taxonomy view/taxonomy"
               tal:attributes="name wid; id wid" class="faceted_select">
-        <option title="All" value=""
-                tal:attributes="selected python: not default_value;
-                      title python:view.translate(title)"
-                tal:content="python:view.translate(title)"
-                i18n:attributes="title" i18n:translate="">All</option>
         <tal:block content="structure taxonomy/render"></tal:block>
       </select>
 
