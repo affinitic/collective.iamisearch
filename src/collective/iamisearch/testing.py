@@ -21,7 +21,7 @@ class CollectiveIamisearchLayer(PloneSandboxLayer):
         self.loadZCML(package=collective.iamisearch)
 
     def setUpPloneSite(self, portal):
-        applyProfile(portal, 'collective.iamisearch:default')
+        applyProfile(portal, "collective.iamisearch:default")
 
 
 COLLECTIVE_IAMISEARCH_FIXTURE = CollectiveIamisearchLayer()
@@ -29,13 +29,13 @@ COLLECTIVE_IAMISEARCH_FIXTURE = CollectiveIamisearchLayer()
 
 COLLECTIVE_IAMISEARCH_INTEGRATION_TESTING = IntegrationTesting(
     bases=(COLLECTIVE_IAMISEARCH_FIXTURE,),
-    name='CollectiveIamisearchLayer:IntegrationTesting'
+    name="CollectiveIamisearchLayer:IntegrationTesting",
 )
 
 
 COLLECTIVE_IAMISEARCH_FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(COLLECTIVE_IAMISEARCH_FIXTURE,),
-    name='CollectiveIamisearchLayer:FunctionalTesting'
+    name="CollectiveIamisearchLayer:FunctionalTesting",
 )
 
 
@@ -43,7 +43,7 @@ COLLECTIVE_IAMISEARCH_ACCEPTANCE_TESTING = FunctionalTesting(
     bases=(
         COLLECTIVE_IAMISEARCH_FIXTURE,
         REMOTE_LIBRARY_BUNDLE_FIXTURE,
-        z2.ZSERVER_FIXTURE
+        z2.ZSERVER_FIXTURE,
     ),
-    name='CollectiveIamisearchLayer:AcceptanceTesting'
+    name="CollectiveIamisearchLayer:AcceptanceTesting",
 )

@@ -16,14 +16,16 @@ from zope.i18n import translate
 
 
 class MenuViewlet(common.ViewletBase):
-    index = ViewPageTemplateFile('menu.pt')
+    index = ViewPageTemplateFile("menu.pt")
 
-    def generate_menu_value_by_taxonomy_level(self, taxonomy_name, target_level=1, all_path=False, is_fill=True):
+    def generate_menu_value_by_taxonomy_level(
+        self, taxonomy_name, target_level=1, all_path=False, is_fill=True
+    ):
         """
         :param target_level:
         :return:
         """
-        utility = self.get_taxonomy('collective.taxonomy.' + taxonomy_name)
+        utility = self.get_taxonomy("collective.taxonomy." + taxonomy_name)
         if not utility.data:
             return None
         target_language = str(utility.getCurrentLanguage(self.request))
@@ -32,7 +34,7 @@ class MenuViewlet(common.ViewletBase):
         taxonomy_filled = []
         index_filter = "taxonomy_{0}".format(taxonomy_name)
         if is_fill:
-            portal_catalog = api.portal.get_tool('portal_catalog')
+            portal_catalog = api.portal.get_tool("portal_catalog")
             taxonomy_filled = portal_catalog.uniqueValuesFor(index_filter)
 
         for key, value in taxonomy_keys.iteritems():
@@ -61,20 +63,29 @@ class MenuViewlet(common.ViewletBase):
         targets_by_level = self.generate_menu_value_by_taxonomy_level(taxonomy_name)
         if not targets_by_level:
             return None
-        sorted_targets_by_level = sorted(targets_by_level.items(), key=operator.itemgetter(1))
+        sorted_targets_by_level = sorted(
+            targets_by_level.items(), key=operator.itemgetter(1)
+        )
 
         current_lang = api.portal.get_current_language()[:2]
         translate_title = translate(_(taxonomy_title), target_language=current_lang)
         normalizer = getUtility(IIDNormalizer)
         folder = normalizer.normalize(translate_title)
         result = OrderedDict()
-        language_tool = api.portal.get_tool('portal_languages')
+        language_tool = api.portal.get_tool("portal_languages")
         langs = language_tool.supported_langs
         for target in sorted_targets_by_level:
             if len(langs) > 1:
-                url = "{0}/{1}/{2}#c0={3}".format(api.portal.get().absolute_url(), self.get_language(), folder, target[0])
+                url = "{0}/{1}/{2}#c0={3}".format(
+                    api.portal.get().absolute_url(),
+                    self.get_language(),
+                    folder,
+                    target[0],
+                )
             else:
-                url = "{0}/{1}#c0={2}".format(api.portal.get().absolute_url(), folder, target[0])
+                url = "{0}/{1}#c0={2}".format(
+                    api.portal.get().absolute_url(), folder, target[0]
+                )
             result[target[1]] = url
         return result
 
