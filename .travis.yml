@@ -23,7 +23,7 @@ before_script:
 - sleep 3
 - firefox -v
 script:
-  - bin/test --all
+  - bin/test
 after_success:
   - bin/createcoverage --output-dir=parts/test/coverage
   - bin/pip install coverage
