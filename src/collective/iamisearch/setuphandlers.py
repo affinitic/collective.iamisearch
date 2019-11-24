@@ -35,7 +35,7 @@ def post_install(context):
 
     language_tool = api.portal.get_tool("portal_languages")
     langs = language_tool.supported_langs
-    current_lang = api.portal.get_current_language()[:2]
+    current_lang = api.portal.get_default_language()[:2]
 
     taxonomies_collection = ["I am", "I search"]
     data_iam = {

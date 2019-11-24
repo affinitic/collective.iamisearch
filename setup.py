@@ -47,6 +47,7 @@ setup(
         "z3c.jbot",
         "collective.taxonomy",
         "eea.facetednavigation",
+        "z3c.form",
     ],
     extras_require={
         "test": [

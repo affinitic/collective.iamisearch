@@ -13,6 +13,8 @@
   -->
   <!--<includeDependencies package="." />-->
 
+  <include package="collective.taxonomy" />
+
   <include package=".browser" />
 
   <include file="permissions.zcml" />
