@@ -5,6 +5,7 @@ jQuery(document).ready(function($){
 
     var page_title = $(document).prop('title');
     var begin_taxonomy_title = page_title.indexOf(':');
+    if (begin_taxonomy_title == -1) return;
     var end_taxonomy_title = page_title.indexOf('—');
     var last_taxonomy = page_title.substring(begin_taxonomy_title + 2, end_taxonomy_title - 1);
     var new_title = page_title.replace(last_taxonomy, value);
