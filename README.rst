@@ -41,6 +41,14 @@ Install collective.iamisearch by adding it to your buildout::
 and then running ``bin/buildout``
 
 
+TODO
+----
+
+- Make folder search / url calculation more robust (by using it's interface)
+- Don't translate Faceted in XML but in code
+- Fix Travis
+
+
 Contribute
 ----------
 
