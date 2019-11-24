@@ -5,6 +5,9 @@ Changelog
 1.0.2 (unreleased)
 ------------------
 
+- Add SEO optimizations (page title, page URL, page H1)
+  [laulaz]
+
 - Improve faceted widget :
    * "All" option makes no sense
    * show widget by default to allow changing value
