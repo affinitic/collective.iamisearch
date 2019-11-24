@@ -11,6 +11,9 @@ from zope.component import getUtility
 
 
 class IamISearchTitleViewlet(TitleViewlet):
+
+    taxonomy_id = None
+
     @property
     def page_title(self):
         """ Add chosen taxonomy value in page title (for SEO)
@@ -24,7 +27,7 @@ class IamISearchTitleViewlet(TitleViewlet):
             return page_title
         current_lang = api.portal.get_current_language()[:2]
         normalizer = getUtility(IIDNormalizer)
-        taxonomy = getUtility(ITaxonomy, name="collective.taxonomy.iam")
+        taxonomy = getUtility(ITaxonomy, name=self.taxonomy_id)
         data = taxonomy.inverted_data.get(current_lang)
         for key, value in data.items():
             normalized_value = normalizer.normalize(value)
@@ -32,3 +35,13 @@ class IamISearchTitleViewlet(TitleViewlet):
                 page_title = u"{0} : {1}".format(page_title, value.lstrip("/"))
                 break
         return escape(safe_unicode(page_title))
+
+
+class IAmTitleViewlet(IamISearchTitleViewlet):
+
+    taxonomy_id = "collective.taxonomy.iam"
+
+
+class ISearchTitleViewlet(IamISearchTitleViewlet):
+
+    taxonomy_id = "collective.taxonomy.isearch"
