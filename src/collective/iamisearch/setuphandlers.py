@@ -3,6 +3,8 @@ import os
 
 from Products.CMFCore.utils import getToolByName
 from collective.iamisearch import _
+from collective.iamisearch.interfaces import IIAmFolder
+from collective.iamisearch.interfaces import IISearchFolder
 from plone.dexterity.interfaces import IDexterityFTI
 
 from Products.CMFPlone.interfaces import INonInstallable
@@ -14,6 +16,7 @@ from plone.app.multilingual import api as api_lng
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from zope.component import getUtility, queryUtility
 from zope.i18n.interfaces import ITranslationDomain
+from zope.interface import alsoProvides
 from zope.interface import implementer
 from zope.schema.interfaces import IVocabularyFactory
 from zope.i18n import translate
@@ -52,6 +55,11 @@ def post_install(context):
     faced_config = {
         "I am": "/faceted/config/iam_folder_{0}.xml",
         "I search": "/faceted/config/isearch_folder_{0}.xml",
+    }
+
+    provided_interfaces = {
+        "I am": IIAmFolder,
+        "I search": IISearchFolder,
     }
 
     # install taxonomy
@@ -94,6 +102,7 @@ def post_install(context):
             new_obj = api.content.create(
                 type="Folder", title=translate_title, container=container
             )
+            alsoProvides(new_obj, provided_interfaces[taxonomy_collection])
             if new_obj.id != new_id:
                 api.content.rename(new_obj, new_id=new_id)
             try:
@@ -109,6 +118,7 @@ def post_install(context):
             for lang in langs:
                 if lang != current_lang:
                     translated_obj = translation_folderish(new_obj, lang, title)
+                    alsoProvides(translated_obj, provided_interfaces[taxonomy_collection])
                     _activate_dashboard_navigation(
                         translated_obj, faced_config[taxonomy_collection].format(lang)
                     )
