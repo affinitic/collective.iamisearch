@@ -2,8 +2,13 @@
 collective.iamisearch
 =====================
 
+.. image:: https://travis-ci.com/affinitic/collective.iamisearch.svg?branch=master
+    :target: https://travis-ci.com/affinitic/collective.iamisearch
+
+
 This products allows you to categorize contents with terms from two editable taxonomies and get a dropdown menu with those terms to find related contents.
 There are :
+
 - "I am" terms
 - "I search" terms
 
@@ -46,7 +51,6 @@ TODO
 
 - Make folder search / url calculation more robust (by using it's interface)
 - Don't translate Faceted in XML but in code
-- Fix Travis
 
 
 Contribute
