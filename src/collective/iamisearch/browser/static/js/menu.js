@@ -1,5 +1,5 @@
 jQuery(document).ready(function($){
-  jQuery(Faceted.Events).bind(Faceted.Events.QUERY_CHANGED, function(evt){
+  jQuery(Faceted.Events).bind(Faceted.Events.AJAX_QUERY_SUCCESS, function(evt){
     var value = $("#c0 option:selected").text();
     $("h1.documentFirstHeading #taxonomy_term").text(value);
 
