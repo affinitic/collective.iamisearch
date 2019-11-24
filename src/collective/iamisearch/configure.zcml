@@ -23,6 +23,20 @@
   <include package="eea.facetednavigation" />
   <include package=".faceted" />
 
+  <adapter
+    for="collective.iamisearch.interfaces.IIAmFolder
+         zope.publisher.interfaces.http.IHTTPRequest"
+    provides="zope.publisher.interfaces.IPublishTraverse"
+    factory=".traversal.IAmFolderTraversable"
+    />
+
+  <adapter
+    for="collective.iamisearch.interfaces.IISearchFolder
+         zope.publisher.interfaces.http.IHTTPRequest"
+    provides="zope.publisher.interfaces.IPublishTraverse"
+    factory=".traversal.ISearchFolderTraversable"
+    />
+
   <genericsetup:registerProfile
       name="default"
       title="collective.iamisearch"

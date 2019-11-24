@@ -1,6 +1,16 @@
-/* The following line defines global variables defined elsewhere. */
-/*globals require*/
+jQuery(document).ready(function($){
+  jQuery(Faceted.Events).bind(Faceted.Events.QUERY_CHANGED, function(evt){
+    var value = $("#c0 option:selected").text();
+    $("h1.documentFirstHeading #taxonomy_term").text(value);
 
+    var page_title = $(document).prop('title');
+    var begin_taxonomy_title = page_title.indexOf(':');
+    var end_taxonomy_title = page_title.indexOf('—');
+    var last_taxonomy = page_title.substring(begin_taxonomy_title + 2, end_taxonomy_title - 1);
+    var new_title = page_title.replace(last_taxonomy, value);
+    $(document).prop('title', new_title);
+  });
+});
 
 if(require === undefined){
   require = function(reqs, torun){

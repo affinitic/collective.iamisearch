@@ -13,6 +13,7 @@ Features
 
 - Adds a viewlet with dropdown menus ("I am" & "I search")
 - Each terms in menus points to faceted results for this term
+- SEO optimized (page URL, page title, page H1)
 
 
 Translations

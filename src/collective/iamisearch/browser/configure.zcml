@@ -21,4 +21,12 @@
     directory="static/js"
     />
 
+  <browser:page
+    for="*"
+    name="seo_view"
+    class=".utils.UtilsView"
+    permission="zope2.View"
+    layer="collective.iamisearch.interfaces.ICollectiveIamisearchLayer"
+    />
+
 </configure>

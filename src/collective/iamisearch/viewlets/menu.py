@@ -63,28 +63,32 @@ class MenuViewlet(common.ViewletBase):
         targets_by_level = self.generate_menu_value_by_taxonomy_level(taxonomy_name)
         if not targets_by_level:
             return None
+        normalizer = getUtility(IIDNormalizer)
         sorted_targets_by_level = sorted(
             targets_by_level.items(), key=operator.itemgetter(1)
         )
+        sorted_targets_by_level = [
+            (i[0], i[1], normalizer.normalize(i[1])) for i in sorted_targets_by_level
+        ]
 
         current_lang = api.portal.get_current_language()[:2]
         translate_title = translate(_(taxonomy_title), target_language=current_lang)
-        normalizer = getUtility(IIDNormalizer)
         folder = normalizer.normalize(translate_title)
         result = OrderedDict()
         language_tool = api.portal.get_tool("portal_languages")
         langs = language_tool.supported_langs
         for target in sorted_targets_by_level:
             if len(langs) > 1:
-                url = "{0}/{1}/{2}#c0={3}".format(
+                url = "{0}/{1}/{2}/{3}#c0={4}".format(
                     api.portal.get().absolute_url(),
                     self.get_language(),
                     folder,
+                    target[2],
                     target[0],
                 )
             else:
-                url = "{0}/{1}#c0={2}".format(
-                    api.portal.get().absolute_url(), folder, target[0]
+                url = "{0}/{1}/{2}#c0={3}".format(
+                    api.portal.get().absolute_url(), folder, target[2], target[0]
                 )
             result[target[1]] = url
         return result
