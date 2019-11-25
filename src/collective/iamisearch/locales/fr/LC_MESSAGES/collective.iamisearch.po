@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2018-09-21 11:20+0000\n"
+"POT-Creation-Date: 2019-11-25 21:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,32 +14,68 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: DOMAIN\n"
 
+#: ../interfaces.py:25
+msgid "Description"
+msgstr "Description"
+
+#: ../interfaces.py:49
+msgid "Descriptions to show above I am faceted search"
+msgstr "Descriptions à afficher au-dessus des recherches Je suis"
+
+#: ../interfaces.py:56
+msgid "Descriptions to show above I search faceted search"
+msgstr "Descriptions à afficher au-dessus des recherches Je trouve"
+
 #: ../setuphandlers.py:43
 #: ../viewlets/menu.pt:7
 msgid "I am"
 msgstr "Je suis"
 
+#: ../profiles/default/controlpanel.xml
+msgid "I am / I seach"
+msgstr "Je suis / Je trouve"
+
+#: ../browser/controlpanel.py:16
+msgid "I am / I search settings"
+msgstr "Paramètres Je suis / Je trouve"
+
+#: ../interfaces.py:22
+msgid "I am Term"
+msgstr "Valeur de Je suis"
+
 #: ../setuphandlers.py:50
-#: ../viewlets/menu.pt:16
+#: ../viewlets/menu.pt:18
 msgid "I search"
 msgstr "Je trouve"
 
-#: ../configure.zcml:33
+#: ../interfaces.py:37
+msgid "I search Term"
+msgstr "Valeur de Je trouve"
+
+#: ../configure.zcml:50
 msgid "Installs the collective.iamisearch add-on."
 msgstr ""
 
-#: ../configure.zcml:42
+#: ../interfaces.py:16
+msgid "Language"
+msgstr "Langue"
+
+#: ../configure.zcml:59
 msgid "Uninstalls the collective.iamisearch add-on."
 msgstr ""
 
-#: ../configure.zcml:33
+#: ../interfaces.py:51
+msgid "Value"
+msgstr "Valeur"
+
+#: ../configure.zcml:50
 msgid "collective.iamisearch"
 msgstr ""
 
-#: ../configure.zcml:42
+#: ../configure.zcml:59
 msgid "collective.iamisearch (uninstall)"
 msgstr ""
 
-#: ../faceted/widgets/widget.py:12
+#: ../faceted/widgets/widget.py:13
 msgid "taxonomy_widget"
 msgstr ""
