@@ -46,6 +46,7 @@ setup(
         "setuptools",
         "z3c.jbot",
         "collective.taxonomy",
+        "collective.z3cform.datagridfield",
         "eea.facetednavigation",
         "z3c.form",
     ],

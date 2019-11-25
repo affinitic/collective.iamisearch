@@ -29,6 +29,19 @@
   </metal:title>
 </metal:content-core>
 
+<metal:description fill-slot="content-description">
+  <metal:description define-slot="content-description">
+    <div class="documentDescription description"
+         id="seo-description"
+         tal:define="seo_view context/@@seo_view;
+                     seo_description seo_view/get_description;
+                     description context/Description"
+         tal:content="python: seo_description or description">
+        Description
+    </div>
+  </metal:description>
+</metal:description>
+
 
 <div metal:fill-slot="content-core">
 

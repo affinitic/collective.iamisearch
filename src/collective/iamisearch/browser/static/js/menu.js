@@ -3,6 +3,8 @@ jQuery(document).ready(function($){
     var value = $("#c0 option:selected").text();
     $("h1.documentFirstHeading #taxonomy_term").text(value);
 
+    $("#seo-description").load('@@taxonomy_description?taxonomy_term=' + $("#c0 option:selected").val());
+
     var page_title = $(document).prop('title');
     var begin_taxonomy_title = page_title.indexOf(':');
     if (begin_taxonomy_title == -1) return;

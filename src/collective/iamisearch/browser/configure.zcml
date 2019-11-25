@@ -22,11 +22,28 @@
     />
 
   <browser:page
+    name="iamisearch-settings"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".controlpanel.SettingsView"
+    permission="cmf.ManagePortal"
+    />
+
+  <browser:page
     for="*"
     name="seo_view"
     class=".utils.UtilsView"
     permission="zope2.View"
     layer="collective.iamisearch.interfaces.ICollectiveIamisearchLayer"
     />
+
+  <browser:page
+    for="*"
+    name="taxonomy_description"
+    class=".utils.UtilsView"
+    attribute="get_description"
+    permission="zope2.View"
+    layer="collective.iamisearch.interfaces.ICollectiveIamisearchLayer"
+    />
+
 
 </configure>

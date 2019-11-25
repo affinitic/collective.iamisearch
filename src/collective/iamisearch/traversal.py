@@ -6,7 +6,7 @@ from plone import api
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from zope.component import getUtility
 
-FACETED_VIEWS = ["configure_faceted.html"]
+FACETED_VIEWS = ["configure_faceted.html", "@@taxonomy_description"]
 IGNORED_NAMES = ["index_html"]
 
 
@@ -23,6 +23,14 @@ class IAmISearchFolderTraversable(DefaultPublishTraverse):
             )
 
         if name in IGNORED_NAMES:
+            name = ""
+            return super(IAmISearchFolderTraversable, self).publishTraverse(
+                request, name
+            )
+
+        if request.form.get("taxonomy_term"):
+            # Ex: coming from language switcher
+            del request.form["taxonomy_term"]
             name = ""
             return super(IAmISearchFolderTraversable, self).publishTraverse(
                 request, name

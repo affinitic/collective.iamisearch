@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <registry>
+
+    <records interface="collective.iamisearch.interfaces.IIamIsearchSettings" />
+
     <records prefix="plone.bundles/collective.iamisearch"
              interface='Products.CMFPlone.interfaces.IBundleRegistry'>
         <value key="enabled">True</value>

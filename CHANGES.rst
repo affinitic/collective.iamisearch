@@ -5,6 +5,9 @@ Changelog
 1.0.2 (unreleased)
 ------------------
 
+- Allow custom descriptions above faceted searches, by value & language
+  [laulaz]
+
 - Add SEO optimizations (page title, page URL, page H1)
   [laulaz]
 
