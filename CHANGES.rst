@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-1.0.2 (unreleased)
-------------------
+1.1 (2019-11-26)
+----------------
 
 - Allow custom descriptions above faceted searches, by value & language
   [laulaz]
