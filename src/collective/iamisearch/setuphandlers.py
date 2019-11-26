@@ -57,10 +57,7 @@ def post_install(context):
         "I search": "/faceted/config/isearch_folder_{0}.xml",
     }
 
-    provided_interfaces = {
-        "I am": IIAmFolder,
-        "I search": IISearchFolder,
-    }
+    provided_interfaces = {"I am": IIAmFolder, "I search": IISearchFolder}
 
     # install taxonomy
     portal = api.portal.get()
@@ -118,7 +115,9 @@ def post_install(context):
             for lang in langs:
                 if lang != current_lang:
                     translated_obj = translation_folderish(new_obj, lang, title)
-                    alsoProvides(translated_obj, provided_interfaces[taxonomy_collection])
+                    alsoProvides(
+                        translated_obj, provided_interfaces[taxonomy_collection]
+                    )
                     _activate_dashboard_navigation(
                         translated_obj, faced_config[taxonomy_collection].format(lang)
                     )
