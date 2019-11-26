@@ -19,6 +19,7 @@ setup(
     version="1.0.2.dev0",
     description="Adds 'I am' and 'I search' dropdown menus in Plone",
     long_description=long_description,
+    long_description_content_type="text/x-rst",
     # Get more from https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
         "Environment :: Web Environment",
