@@ -11,10 +11,8 @@ Changelog
 - Add SEO optimizations (page title, page URL, page H1)
   [laulaz]
 
-- Improve faceted widget :
-   * "All" option makes no sense
-   * show widget by default to allow changing value
-   * translate widget title
+- Improve faceted widget : "All" option makes no sense / show widget by default
+  to allow changing value / translate widget title
   [laulaz]
 
 - Display menu to public (and not only Members)
