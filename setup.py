@@ -16,7 +16,7 @@ long_description = "\n\n".join(
 
 setup(
     name="collective.iamisearch",
-    version='1.1.1.dev0',
+    version='1.1.1',
     description="Adds 'I am' and 'I search' dropdown menus in Plone",
     long_description=long_description,
     long_description_content_type="text/x-rst",

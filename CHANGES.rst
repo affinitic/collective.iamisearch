@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.1.1 (unreleased)
+1.1.1 (2019-11-27)
 ------------------
 
 - Avoid error when descriptions mapping is not yet filled
