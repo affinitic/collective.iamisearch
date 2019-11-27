@@ -5,7 +5,8 @@ Changelog
 1.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Avoid error when descriptions mapping is not yet filled
+  [laulaz]
 
 
 1.1 (2019-11-26)

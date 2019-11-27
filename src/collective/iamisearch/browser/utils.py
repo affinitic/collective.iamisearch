@@ -32,17 +32,19 @@ class UtilsView(BrowserView):
             record_id = "isearch_taxonomy_description"
         else:
             return " "
+        mapping = get_registry_record(
+            "{0}.{1}".format(
+                "collective.iamisearch.interfaces.IIamIsearchSettings",
+                record_id,
+            )
+        )
+        if mapping is None:
+            return " "
         taxonomy = getUtility(ITaxonomy, name=taxonomy_id)
         data = taxonomy.inverted_data.get(current_lang)
         for key, value in data.items():
             normalized_value = normalizer.normalize(value)
             if taxonomy_term == key or taxonomy_term == normalized_value:
-                mapping = get_registry_record(
-                    "{0}.{1}".format(
-                        "collective.iamisearch.interfaces.IIamIsearchSettings",
-                        record_id,
-                    )
-                )
                 for line in mapping:
                     if key == line["term"] and current_lang == line["lang"]:
                         return line["text"]
